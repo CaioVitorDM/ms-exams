@@ -44,6 +44,8 @@ public abstract class GenericController<E extends BaseEntity, DTO extends Entity
      * @return ResponseEntity containing the list of DTOs and status 200 (OK).
      */
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+
     public ResponseEntity<ApiResponseDTO<PageImpl<EntityDTO>>> getAll(@ParameterObject Pageable pageable) {
         var page = service.findAll(pageable);
         var res = new PageImpl<>(page.getContent().stream().map(DTO::toResponse).toList(), pageable,
@@ -63,6 +65,8 @@ public abstract class GenericController<E extends BaseEntity, DTO extends Entity
      * @return ResponseEntity containing the DTO and status 200 (OK).
      */
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+
     public ResponseEntity<ApiResponseDTO<EntityDTO>> getById(@PathVariable Long id) {
         return ResponseEntity.ok(new ApiResponseDTO<>(
                 true,
@@ -78,6 +82,8 @@ public abstract class GenericController<E extends BaseEntity, DTO extends Entity
      * @return ResponseEntity containing the DTO and status 201 (CREATED).
      */
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+
     public ResponseEntity<ApiResponseDTO<EntityDTO>> create(@Valid @RequestBody DTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>(
                 true,
@@ -94,6 +100,8 @@ public abstract class GenericController<E extends BaseEntity, DTO extends Entity
      * @return ResponseEntity containing the DTO and status 200 (OK).
      */
     @PutMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+
     public ResponseEntity<ApiResponseDTO<EntityDTO>> update(@PathVariable Long id, @Valid @RequestBody DTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseDTO<>(
                 true,
@@ -109,6 +117,8 @@ public abstract class GenericController<E extends BaseEntity, DTO extends Entity
      * @return ResponseEntity with status 200 (OK).
      */
     @DeleteMapping("{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+
     public ResponseEntity<ApiResponseDTO<DTO>> delete(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.ok(new ApiResponseDTO<>(

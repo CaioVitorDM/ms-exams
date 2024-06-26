@@ -14,7 +14,6 @@ public class ExamsBuilder {
     private Long doctorId;
     private Long patientId;
     private LocalDate examDate;
-
     private ZonedDateTime createdAt;
 
     public ExamsBuilder id(Long id) {

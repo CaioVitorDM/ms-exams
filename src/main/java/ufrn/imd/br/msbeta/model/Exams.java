@@ -9,6 +9,7 @@ import org.hibernate.annotations.Where;
 import ufrn.imd.br.msbeta.model.builder.ExamsBuilder;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @Entity
@@ -37,6 +38,7 @@ public class Exams extends BaseEntity{
     @NotNull
     @Column(name = "exam_date", nullable = false)
     private LocalDate examDate;
+
 
     public static ExamsBuilder builder(){
         return new ExamsBuilder();

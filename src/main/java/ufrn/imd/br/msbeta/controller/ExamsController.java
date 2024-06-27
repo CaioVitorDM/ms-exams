@@ -12,7 +12,7 @@ import ufrn.imd.br.msbeta.service.ExamsService;
 
 
 @RestController
-@RequestMapping("/v1/exams")
+@RequestMapping("/v1")
 public class ExamsController extends GenericController<Exams, ExamsDTO, ExamsService> {
     protected ExamsController(ExamsService service) {
         super(service);
@@ -34,6 +34,11 @@ public class ExamsController extends GenericController<Exams, ExamsDTO, ExamsSer
                 service.findExamsByFilters(name, createdAt, doctorId, patientId, pageable, examType),
                 null
         ));
+    }
+
+    @PostMapping("/save")
+    public void saveAndExam(){
+        System.out.println("Exame salvo");
     }
 
 }

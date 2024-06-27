@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/v1/beta")
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class BetaController extends GenericController<Beta, BetaDTO, BetaService> {
     /**
      * Constructs a GenericController instance with the provided service.

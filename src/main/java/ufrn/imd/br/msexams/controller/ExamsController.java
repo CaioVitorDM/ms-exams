@@ -32,14 +32,14 @@ public class ExamsController extends GenericController<Exams, ExamsDTO, ExamsSer
     {
         return ResponseEntity.ok(new ApiResponseDTO<>(
                 true,
-                "Success: protocols retrieved successfully",
+                "Success: exams retrieved successfully",
                 service.findExamsByFilters(name, createdAt, doctorId, patientId, pageable, examType),
                 null
         ));
     }
-
     @PostMapping("/save")
-    public ResponseEntity<ApiResponseDTO<EntityDTO>> createExame(
+    ////estava createExame
+    public ResponseEntity<ApiResponseDTO<EntityDTO>> createExam(
             @Valid @RequestBody ExamsDTO dto
     ){
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -47,6 +47,37 @@ public class ExamsController extends GenericController<Exams, ExamsDTO, ExamsSer
                         true,
                         "Sucess: Exam created sucessfully.",
                         service.createExam(dto).toResponse(),
+                        null
+                )
+        );
+    }
+
+//    @PutMapping("/edit-exams/{id}")
+//    public ResponseEntity<ApiResponseDTO<EntityDTO>> updateExam(
+//
+//            @PathVariable Long id,
+//            @Valid @RequestBody ExamsDTO dto) {
+//        System.out.println("Recebido em Controller");
+//        return ResponseEntity.ok(new ApiResponseDTO<>(
+//                true,
+//                "Success: Exam updated successfully.",
+//                service.updateExam(dto).toResponse(),
+//                null
+//        ));
+//    }
+
+    @PutMapping("/edit-exams/{id}")
+    public ResponseEntity<ApiResponseDTO<ExamsDTO>> updateProtocol
+            (@Valid @RequestBody ExamsDTO dto){
+        System.out.println("Recebido em Controller");
+        System.out.println("DTO: " + dto);
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponseDTO<>(
+                        true,
+                        "Sucesso: Exam edited.",
+                        service.updateExam(dto),
                         null
                 )
         );

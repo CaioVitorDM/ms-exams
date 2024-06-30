@@ -36,7 +36,7 @@ public class CustomExamRepositoryImpl implements CustomExamRepository {
             orderDirection = pageable.getSort().get().iterator().next().getDirection().name();
         }
 
-
+        // Construindo a cláusula WHERE
         if (name != null && !name.trim().isEmpty()) {
             whereClause.append(" AND LOWER(p.name) LIKE LOWER(:name)");
         }
@@ -46,17 +46,11 @@ public class CustomExamRepositoryImpl implements CustomExamRepository {
         if (doctorId != null && !doctorId.trim().isEmpty()) {
             whereClause.append(" AND p.doctorId = :doctorId");
         }
-
         if (patientId != null && !patientId.trim().isEmpty()) {
-            whereClause.append(" AND (");
-            whereClause.append(" (p.isSpecific = TRUE AND :patientId MEMBER OF p.patientsIdList)");
-            whereClause.append(" OR (p.isSpecific = FALSE AND p.doctorId = :doctorId)");
-            whereClause.append(")");
+            whereClause.append(" AND p.patientId = :patientId");
         }
-
-        if(examType != null && !examType.trim().isEmpty()){
+        if (examType != null && !examType.trim().isEmpty()) {
             whereClause.append(" AND LOWER(p.examType) LIKE LOWER(:examType)");
-
         }
 
         String countQueryStr = "SELECT COUNT(p) FROM Exams p WHERE p.active = TRUE" + whereClause;
@@ -68,7 +62,7 @@ public class CustomExamRepositoryImpl implements CustomExamRepository {
             return new PageImpl<>(Collections.emptyList(), pageable, count);
         }
 
-        String finalQuery = INITIAL + whereClause;
+        String finalQuery = "SELECT p FROM Exams p WHERE p.active = TRUE" + whereClause + " ORDER BY " + orderField + " " + orderDirection;
         Query query = entityManager.createQuery(finalQuery, Exams.class);
         setQueryParameters(query, name, createdAt, doctorId, patientId, examType);
 

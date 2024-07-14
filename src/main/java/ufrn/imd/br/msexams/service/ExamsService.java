@@ -118,28 +118,4 @@ public class ExamsService implements GenericService<Exams, ExamsDTO>{
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
     }
-
-//    public EntityDTO updateExam(Long id, ExamsDTO dto) {
-//        Exams existingExam = examsRepository.findById(id).orElseThrow(() ->
-//                new ResourceNotFoundException("Exame não encontrado com ID: " + id)
-//        );
-//        System.out.println("Recebido em Service");
-////        System.out.println(existingExam.getName());
-////        existingExam.setExamType(dto.examType());
-////        existingExam.setName(dto.name());
-////        existingExam.setExamDate(dto.examDate());
-////        existingExam.setFileId(dto.fileId());
-////        existingExam.setDoctorId(dto.doctorId());
-////        existingExam.setPatientId(dto.patientId());
-//        // Atualizar outros campos conforme necessário
-//        System.out.println(existingExam.getName());
-//
-//
-//        // Validar antes de salvar
-//        validateBeforeUpdate(existingExam);
-//
-//        Exams updatedExam = examsRepository.save(existingExam);
-//
-//        return examsMapper.toDto(updatedExam);
-//    }
 }

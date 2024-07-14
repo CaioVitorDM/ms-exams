@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record BetaDTO(long id, Long patientId, Long doctorId, LocalDate betaDate, Integer betaValue) implements EntityDTO{
+public record BetaDTO(long id,
+                      Long patientId,
+                      Long doctorId,
+                      LocalDate betaDate,
+                      Integer betaValue) implements EntityDTO{
     @Override
     public EntityDTO toResponse() {
         return new BetaDTO(

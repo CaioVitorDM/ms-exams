@@ -52,22 +52,9 @@ public class ExamsController extends GenericController<Exams, ExamsDTO, ExamsSer
         );
     }
 
-//    @PutMapping("/edit-exams/{id}")
-//    public ResponseEntity<ApiResponseDTO<EntityDTO>> updateExam(
-//
-//            @PathVariable Long id,
-//            @Valid @RequestBody ExamsDTO dto) {
-//        System.out.println("Recebido em Controller");
-//        return ResponseEntity.ok(new ApiResponseDTO<>(
-//                true,
-//                "Success: Exam updated successfully.",
-//                service.updateExam(dto).toResponse(),
-//                null
-//        ));
-//    }
 
     @PutMapping("/edit-exams/{id}")
-    public ResponseEntity<ApiResponseDTO<ExamsDTO>> updateProtocol
+    public ResponseEntity<ApiResponseDTO<ExamsDTO>> updateExam
             (@Valid @RequestBody ExamsDTO dto){
         System.out.println("Recebido em Controller");
         System.out.println("DTO: " + dto);

@@ -15,34 +15,37 @@ import java.util.List;
 
 @Transactional
 public class CustomBetaRepositoryImpl implements CustomBetaRepository {
-
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public Page<Beta> searchByDateRange(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public Page<Beta> searchByDateRange(String patientId, String doctorId, LocalDate betaDate, Pageable pageable) {
         StringBuilder whereClause = new StringBuilder("WHERE b.active = TRUE ");
 
-        if (startDate != null) {
-            whereClause.append("AND b.betaDate >= :startDate ");
+        if (betaDate != null) {
+            whereClause.append("AND b.betaDate = :betaDate ");
         }
 
-        if (endDate != null) {
-            whereClause.append("AND b.betaDate <= :endDate ");
+        if (patientId != null) {
+            whereClause.append("AND b.patientId = :patientId ");
         }
 
-        String countQueryStr = "SELECT COUNT(b) FROM Beta b " + whereClause;
+        if (doctorId != null) {
+            whereClause.append("AND b.doctorId = :doctorId ");
+        }
+
+        String countQueryStr = "SELECT COUNT(b) FROM Beta b " + whereClause.toString().trim();
         Query countQuery = entityManager.createQuery(countQueryStr);
-        setQueryParameters(countQuery, startDate, endDate);
+        setQueryParameters(countQuery, betaDate, patientId, doctorId);
 
         long count = ((Number) countQuery.getSingleResult()).longValue();
         if (count == 0) {
             return new PageImpl<>(Collections.emptyList(), pageable, count);
         }
 
-        String finalQuery = "SELECT b FROM Beta b " + whereClause + "ORDER BY b.betaDate DESC";
+        String finalQuery = "SELECT b FROM Beta b " + whereClause.toString().trim() + " ORDER BY b.betaDate DESC";
         Query query = entityManager.createQuery(finalQuery, Beta.class);
-        setQueryParameters(query, startDate, endDate);
+        setQueryParameters(query, betaDate, patientId, doctorId);
 
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
@@ -51,12 +54,15 @@ public class CustomBetaRepositoryImpl implements CustomBetaRepository {
         return new PageImpl<>(resultList, pageable, count);
     }
 
-    private void setQueryParameters(Query query, LocalDate startDate, LocalDate endDate) {
-        if (startDate != null) {
-            query.setParameter("startDate", startDate);
+    private void setQueryParameters(Query query, LocalDate betaDate, String patientId, String doctorId) {
+        if (betaDate != null) {
+            query.setParameter("betaDate", betaDate);
         }
-        if (endDate != null) {
-            query.setParameter("endDate", endDate);
+        if (patientId != null) {
+            query.setParameter("patientId", patientId);
+        }
+        if (doctorId != null) {
+            query.setParameter("doctorId", doctorId);
         }
     }
 }

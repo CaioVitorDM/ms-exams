@@ -7,5 +7,5 @@ import ufrn.imd.br.msexams.model.Beta;
 import java.time.LocalDate;
 
 public interface CustomBetaRepository {
-    Page<Beta> searchByDateRange(LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<Beta> searchByDateRange(String patientId, String doctorId, LocalDate betaDate, Pageable pageable);
 }
